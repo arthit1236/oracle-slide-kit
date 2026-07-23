@@ -1,4 +1,7 @@
-# oracle-slide-kit
+# oracle-slide-kit [MOVED]
+
+> 🚚 **REPO MOVED (2026-07-23).** Canonical home is now **https://github.com/BankCurfew/oracle-slide-kit**
+> ทำงานต่อ + clone จากที่ใหม่. repo นี้ (arthit1236) archived เป็นประวัติ ไม่ update ต่อ.
 
 > Fleet HTML-slide knowledge kit: Dreams Office
 
