@@ -1,6 +1,6 @@
 # oracle-slide-kit
 
-> Fleet HTML-slide knowledge kit — Dreams Office
+> Fleet HTML-slide knowledge kit: Dreams Office
 > Repo Doc Standard v1.0
 
 ## Identity
@@ -14,15 +14,15 @@
 ## Repo Doc Standard
 
 This repo follows the Dreams Office Repo Doc Standard:
-- `README.md` — public-facing overview and quick start
-- `CLAUDE.md` — this file: repo identity, conduct, oracle context
-- `DIRECTORY.md` — full file index with descriptions
+- `README.md`: public-facing overview and quick start
+- `CLAUDE.md`: this file: repo identity, conduct, oracle context
+- `DIRECTORY.md`: full file index with descriptions
 - All docs in `docs/` follow SOP numbering (SOP-XXX-description.md)
 
 ## Conduct
 
 - No oracle identity: this is a shared kit, not an oracle repo
-- Content contributors: Prism (HOW-IT-WORKS + template), Quill (PLAYBOOK), Lens (SOP numbering + QA)
+- Content contributors: Prism (HOW-IT-WORKS + template), Quill (PLAYBOOK), Nobi (CAR-PAR), Lens (SOP numbering + QA)
 - Scaffold owner: Forge Oracle
 - Dream approves all major structural changes
 
@@ -38,4 +38,4 @@ When creating slides:
 
 - ห้าม commit secrets
 - ห้าม push --force
-- ทุก structural change = cc Nobi
+- ทุก structural change: cc Nobi

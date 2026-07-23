@@ -1,6 +1,6 @@
 # oracle-slide-kit
 
-> Fleet HTML-slide knowledge kit — Dreams Office
+> Fleet HTML-slide knowledge kit: Dreams Office
 
 ## Overview
 
@@ -8,11 +8,11 @@ Shared knowledge base and template system for creating HTML presentation slides 
 
 ## How to Use This Kit
 
-1. **Read the playbook** — `docs/PLAYBOOK.md` — ขั้นตอนการสร้าง slide จาก brief ถึง deliver
-2. **Understand the system** — `docs/HOW-IT-WORKS.md` — architecture, tech stack, render flow
-3. **Copy the template** — `template/deck-template.html` — starting point สำหรับทุก deck
-4. **See examples** — `examples/` — T1 (simple) และ T2 (advanced) reference decks
-5. **Follow the SOP** — `docs/SOP-SLIDE-001.md` — QA checklist ก่อน deliver
+1. **Read the playbook**: `docs/PLAYBOOK.md` ขั้นตอนการสร้าง slide จาก brief ถึง deliver
+2. **Understand the system**: `docs/HOW-IT-WORKS.md` architecture, tech stack, render flow
+3. **Copy the template**: `template/deck-template.html` starting point สำหรับทุก deck
+4. **See examples**: `examples/` T1 (simple) และ T2 (advanced) reference decks
+5. **Follow the SOP**: `docs/SOP-SLIDE-001.md` QA checklist ก่อน deliver
 
 ## Quick Start
 
@@ -33,6 +33,7 @@ oracle-slide-kit/
 ├── docs/
 │   ├── HOW-IT-WORKS.md    # System architecture (Prism)
 │   ├── PLAYBOOK.md        # Creation workflow (Quill)
+│   ├── CAR-PAR-slide-production.md  # CAR-PAR process (Nobi)
 │   └── SOP-SLIDE-001.md   # QA + delivery SOP (Lens)
 ├── template/
 │   └── deck-template.html # Master slide template (Prism)
@@ -47,6 +48,7 @@ oracle-slide-kit/
 |------|-------|
 | `docs/HOW-IT-WORKS.md` | Prism |
 | `docs/PLAYBOOK.md` | Quill |
+| `docs/CAR-PAR-slide-production.md` | Nobi |
 | `docs/SOP-SLIDE-001.md` | Lens |
 | `template/deck-template.html` | Prism |
 | Scaffold + maintenance | Forge |

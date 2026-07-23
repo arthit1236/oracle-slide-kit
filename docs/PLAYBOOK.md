@@ -1,11 +1,11 @@
-# PLAYBOOK — Slide Creation Workflow
+# PLAYBOOK: Slide Creation Workflow
 
-> **Owner: Quill** — เติม content นี้ใน `~/.maw/inbox/slide-kit/playbook.md` แล้ว Forge จะ merge เข้า
-> Scaffold: Forge Oracle 2026-07-23 · ref: nobi#102
+> **Owner: Quill** เติม content นี้ใน `~/.maw/inbox/slide-kit/playbook.md` แล้ว Forge จะ merge เข้า
+> Scaffold: Forge Oracle 2026-07-23, ref: nobi#102
 
 ---
 
-## [PLACEHOLDER — Quill to fill]
+## [PLACEHOLDER: Quill to fill]
 
 Topics to cover:
 - Stage 1: Brief intake (what info to collect from Dream/requester)
@@ -18,4 +18,4 @@ Topics to cover:
 
 ---
 
-*Content draft goes in `~/.maw/inbox/slide-kit/playbook.md` — Forge merges on signal*
+*Content draft goes in `~/.maw/inbox/slide-kit/playbook.md` Forge merges on signal*
