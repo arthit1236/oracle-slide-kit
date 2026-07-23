@@ -113,7 +113,7 @@ oracle เดียวทำได้ทั้ง content + HTML ถ้ามี
 
 ### 4.1 เตรียมไฟล์
 
-1. Clone template: `cp ~/.maw/inbox/slide-kit/deck-template.html ~/.maw/inbox/itraining-tN-TOPIC-draft.html`
+1. Clone template: `cp template/deck-template.html ~/.maw/inbox/itraining-tN-TOPIC-draft.html`
 2. เปลี่ยน `<title>` เป็นชื่อ deck
 3. เปลี่ยน cover slide: title, subtitle
 
@@ -224,9 +224,13 @@ oracle เดียวทำได้ทั้ง content + HTML ถ้ามี
 ### 5.1 QA Checklist (บังคับก่อน deliver)
 
 ```bash
-# 1. em-dash = 0 (บังคับ) ใช้ unicode hex pattern
-grep -oP '\x{2014}|\x{2013}' file.html | wc -l
-# ต้องได้ 0
+# 1. em-dash = 0 (บังคับ): เช็คทั้ง literal UTF-8 AND HTML entities
+# 1a. Literal characters (UTF-8 bytes)
+grep -cP '\xe2\x80\x93|\xe2\x80\x94' file.html
+# 1b. HTML entities (Thai HTML-encoded content อาจใช้ entities แทน literal)
+grep -ciE '&#8212;|&#8211;|&mdash;|&ndash;' file.html
+# ทั้ง 1a + 1b ต้องได้ 0
+# หมายเหตุ: literal grep อย่างเดียวไม่พอ เพราะ HTML entities หลุด
 
 # 2. นับ slides
 grep -c 'class="slide' file.html
@@ -288,7 +292,7 @@ grep -c 'คำถามฝึกคิด' file.html
 
 **Prompt pattern:**
 ```
-อ่าน content ที่ [path] + template ที่ ~/.maw/inbox/slide-kit/deck-template.html
+อ่าน content ที่ [path] + template ที่ template/deck-template.html
 สร้าง HTML slides ตาม HOW-IT-WORKS.md pattern
 ทุก section ต้องมี Q/R/Note, animation class, counter ถูก
 QA: grep em-dash = 0, counter ตรง, keyboard nav ทำงาน
@@ -297,10 +301,11 @@ QA: grep em-dash = 0, counter ตรง, keyboard nav ทำงาน
 ### 6.3 QA gate
 
 ```bash
-# รัน 3 คำสั่งนี้ก่อน deliver ทุกครั้ง (ใช้ hex pattern ไม่ใช้ literal characters)
-grep -oP '\x{2014}|\x{2013}' file.html | wc -l  # must = 0
-grep -c 'class="slide' file.html                 # count slides
-grep -oP '\d+/\d+' file.html | sort -u           # all same TOTAL
+# รัน 4 คำสั่งนี้ก่อน deliver ทุกครั้ง
+grep -cP '\xe2\x80\x93|\xe2\x80\x94' file.html          # literal em/en-dash = 0
+grep -ciE '&#8212;|&#8211;|&mdash;|&ndash;' file.html    # entity em/en-dash = 0
+grep -c 'class="slide' file.html                          # count slides
+grep -oP '\d+/\d+' file.html | sort -u                    # all same TOTAL
 ```
 
 ---
@@ -331,7 +336,7 @@ grep -oP '\d+/\d+' file.html | sort -u           # all same TOTAL
 
 3. **คำถามฝึกคิดบังคับ** ทุก deck ต้องมี Q/R/Note pattern, target 1 คำถามต่อ 2-3 สไลด์ ห้ามเป็นสไลด์บรรยายนิ่ง (CAR-1)
 
-4. **em-dash = 0 ก่อน deliver** ใช้ `grep -oP '\x{2014}|\x{2013}' file | wc -l` เป็น QA gate บังคับ ทั้ง content text และ HTML (CAR-3)
+4. **em-dash = 0 ก่อน deliver** เช็คทั้ง literal (`grep -cP '\xe2\x80\x93|\xe2\x80\x94'`) AND entity (`grep -ciE '&#8212;|&#8211;|&mdash;|&ndash;'`) ทั้ง content text และ HTML (CAR-3)
 
 5. **Counter update ทุกครั้ง** ที่เพิ่ม/ลบ slide ตรวจ N/TOTAL ทุก slide ให้ถูก (hardcoded ไม่ dynamic)
 
@@ -341,15 +346,82 @@ grep -oP '\d+/\d+' file.html | sort -u           # all same TOTAL
 
 ---
 
-## 9. อ้างอิง
+## 9. Logo / Brand Customization
 
-| Document | ที่อยู่ | เนื้อหา |
-|----------|--------|---------|
-| HOW-IT-WORKS.md | `docs/HOW-IT-WORKS.md` | โครงสร้าง HTML, CSS design system, JS nav, Q/R/Note pattern |
-| deck-template.html | `template/deck-template.html` | Template เต็ม, 7 slide types พร้อมใช้ |
-| CAR-PAR | `docs/CAR-PAR-slide-production.md` | บทเรียนจริงจาก T.1/6 + T.2/6 |
-| CDT-TRAIN-001 | conduct (ถ้ามี) | มาตรฐาน interactive training deck |
-| Gold standard | T.1/6 Mindset deck | ตัวอย่างที่ดีที่สุดสำหรับอ้างอิง |
+**เปลี่ยนโลโก้:** ทุก slide มี logo block เดียวกัน (hardcoded ใน HTML ทุก slide):
+```html
+<div style="position:absolute;top:20px;left:30px;z-index:8;text-align:left">
+  <div style="font-size:19px;font-weight:800">
+    <span style="color:#d31145">i</span>
+    <span class="lg-t">Agency</span>
+    <span style="color:#d31145">AIA</span>
+  </div>
+  <div style="font-size:10px;opacity:.6">จริงใจ ลงมือ อยู่ด้วยกัน</div>
+</div>
+```
+
+**วิธีเปลี่ยน:** search-replace ทุก slide พร้อมกัน (logo block ซ้ำทุก slide)
+- เปลี่ยนชื่อแบรนด์: แก้ text ใน `<span>` tags
+- เปลี่ยนสี: แก้ `color:#d31145` (แดง AIA) เป็นสีแบรนด์ใหม่
+- เปลี่ยน tagline: แก้ "จริงใจ ลงมือ อยู่ด้วยกัน"
+
+**เปลี่ยนสี brand palette:** แก้ใน `<style>`:
+- `.o-red`: สี orb หลัก (background:#b30d28)
+- `.gl-red h3`: สี card heading (color:#ff6b87 dark / #C8102E light)
+- `.accent`: gradient ของคำเน้นใน title
+- Progress bar: `linear-gradient(90deg,#C8102E,#F5C518)`
+
+---
+
+## 10. Thai Text: Entities vs UTF-8
+
+**Content phase (markdown):** เขียน UTF-8 ไทยปกติ เช่น `จริงใจ ลงมือ อยู่ด้วยกัน`
+
+**HTML phase (deck):** มี 2 แนวทาง:
+1. **UTF-8 ตรง** (แนะนำ): เขียนภาษาไทยตรงๆ ใน HTML ใช้ `<meta charset="UTF-8">` (อยู่ใน template แล้ว)
+2. **HTML entities** (safe fallback): แปลงเป็น `&#NNNN;` เช่น `&#3592;&#3619;&#3636;&#3591;&#3651;&#3592;` = จริงใจ
+
+**เมื่อไหร่ใช้ entities:**
+- Emoji: ใช้ entities เสมอ (`&#128172;` แทน 💬) เพราะ encoding ข้าม editor อาจเพี้ยน
+- Content ที่ subagent เขียน: อาจได้ entities มาอัตโนมัติ ซึ่งใช้ได้ปกติ
+- ผสมกันได้: UTF-8 ไทย + HTML entity emoji ในไฟล์เดียวกันทำงานได้
+
+**ข้อควรระวัง:** em-dash entity (`&#8212;` / `&mdash;`) ต้อง grep เพิ่มจาก literal character (ดู QA checklist G1)
+
+---
+
+## 11. Progress Bar: Initial State
+
+Progress bar (`.bar`) ใช้ CSS `transition: width .4s` และ JS set width เป็น % ตาม slide ปัจจุบัน
+
+**Initial state (slide 1):** bar ยังไม่มี inline style (width = 0 จาก CSS default)
+
+**JS logic:**
+```javascript
+var b = el.querySelector('.bar');
+if (b && !b.getAttribute('style'))
+  b.style.width = ((n/(t-1))*100) + '%';
+```
+
+- `!b.getAttribute('style')`: เช็คว่ายังไม่เคย set width (ป้องกัน re-trigger)
+- Slide 0: width = 0%
+- Slide สุดท้าย: width = 100%
+- ทุก slide ระหว่าง: เปอร์เซ็นต์เท่ากับ position/total
+
+**ข้อควรระวัง:** bar จะแสดงเมื่อ slide นั้นถูก navigate ถึงเท่านั้น (lazy set). ถ้ากด → กลับ ← bar จะไม่ reset (by design, เป็น "high-water mark")
+
+---
+
+## 12. อ้างอิง
+
+| Document | ที่อยู่ | เนื้อหา | ต้องอ่าน? |
+|----------|--------|---------|-----------|
+| **PLAYBOOK.md** | `docs/PLAYBOOK.md` | Step-by-step workflow ทั้งหมด | **ESSENTIAL**: อ่านก่อนเริ่มงาน |
+| **deck-template.html** | `template/deck-template.html` | Template เต็ม, 7 slide types พร้อม clone | **ESSENTIAL**: ใช้เป็นฐาน |
+| HOW-IT-WORKS.md | `docs/HOW-IT-WORKS.md` | โครงสร้าง HTML, CSS design system, JS nav | SUPPLEMENTARY: อ่านเมื่อต้องแก้ CSS/JS หรือสร้าง slide type ใหม่ |
+| CDT-TRAIN-001 | nobi-oracle conduct | มาตรฐาน interactive training deck | SUPPLEMENTARY: อ่านเมื่อ Nobi อ้าง หรือต้องเช็ค conduct compliance |
+| CAR-PAR | `docs/CAR-PAR-slide-production.md` | บทเรียนจริงจาก T.1/6 + T.2/6 | SUPPLEMENTARY: อ่านเมื่อต้องการเข้าใจ "ทำไม" ของกฎแต่ละข้อ |
+| Gold standard | T.1/6 Mindset deck | ตัวอย่างที่ดีที่สุดสำหรับอ้างอิง | SUPPLEMENTARY: เปิดดูเมื่อสงสัยว่า "ควรดูเป็นยังไง" |
 
 ---
 

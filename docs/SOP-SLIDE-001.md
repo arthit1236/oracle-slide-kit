@@ -12,14 +12,19 @@
 **QA Gate บังคับก่อน deliver ทุกครั้ง:**
 
 ```bash
-grep -oP '\x{2014}|\x{2013}' file.html | wc -l  # em-dash = 0 (บังคับ)
+# 1. em-dash = 0: ต้องเช็คทั้ง literal UTF-8 AND HTML entities
+grep -cP '\xe2\x80\x93|\xe2\x80\x94' file.html          # literal em/en-dash
+grep -ciE '&#8212;|&#8211;|&mdash;|&ndash;' file.html    # HTML entity forms
+# ทั้ง 2 บรรทัดต้องได้ 0 (literal grep อย่างเดียวไม่พอ)
+
+# 2-4. Structural checks
 grep -c 'class="slide' file.html                 # นับ slides
 grep -oP '\d+/\d+' file.html | sort -u           # TOTAL ต้องเท่ากันทุก slide
 grep -c 'คำถามฝึกคิด' file.html                  # target ~30% ของ slides
 ```
 
 **Forbidden patterns:**
-- em-dash / en-dash ในทุก surface (ดู no-em-dash-everything rule)
+- em-dash / en-dash ในทุก surface: ทั้ง literal character AND HTML entities (&#8212; &#8211; &mdash; &ndash;)
 - External CSS/JS/image links (ยกเว้น YouTube embed)
 - Counter N/TOTAL ไม่ตรง
 
