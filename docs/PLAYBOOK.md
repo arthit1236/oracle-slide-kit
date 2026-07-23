@@ -224,7 +224,7 @@ oracle เดียวทำได้ทั้ง content + HTML ถ้ามี
 ### 5.1 QA Checklist (บังคับก่อน deliver)
 
 ```bash
-# 1. em-dash = 0 (บังคับ) — ใช้ unicode hex pattern
+# 1. em-dash = 0 (บังคับ) ใช้ unicode hex pattern
 grep -oP '\x{2014}|\x{2013}' file.html | wc -l
 # ต้องได้ 0
 

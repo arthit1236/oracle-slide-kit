@@ -5,7 +5,7 @@
 
 ---
 
-## QA Checklist (ใช้ได้ทันที — Lens เพิ่ม SOP number + ส่วน sign-off)
+## QA Checklist (ใช้ได้ทันที Lens เพิ่ม SOP number + ส่วน sign-off)
 
 ดู QA checklist เต็มใน `docs/PLAYBOOK.md` §5.1 (Phase 4: QA + Deliver)
 
